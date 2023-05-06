@@ -5,6 +5,8 @@ import (
 	"unicode/utf8"
 )
 
+// UTF for copy paste -> ☺ <-
+
 func main() {
 	s := "G☺"
 	banner(s, 6)
@@ -22,6 +24,9 @@ func main() {
 	x, y := 1, "1"
 	fmt.Printf("x=%v, y=%v\n", x, y)
 	fmt.Printf("x=%#v, y=%#v\n", x, y) // Use %#v in debug/log
+
+	fmt.Printf("%20s!\n", s)
+	fmt.Println(isPalindrome(s))
 }
 
 func banner(text string, width int) {
@@ -36,4 +41,16 @@ func banner(text string, width int) {
 		fmt.Print("-")
 	}
 	fmt.Println()
+}
+
+func isPalindrome(s string) bool {
+	// if len(s) == 1 {
+	// 	return true
+	// }
+	for i := 0; i < len(s); i++ {
+		if s[i] == s[len(s)-1-i] {
+			return true
+		}
+	}
+	return false
 }
