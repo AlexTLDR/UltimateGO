@@ -18,6 +18,10 @@ func main() {
 	// rune (int32)
 	u := s[0]
 	fmt.Printf("%c of type %T\n", u, u)
+
+	x, y := 1, "1"
+	fmt.Printf("x=%v, y=%v\n", x, y)
+	fmt.Printf("x=%#v, y=%#v\n", x, y) // Use %#v in debug/log
 }
 
 func banner(text string, width int) {
