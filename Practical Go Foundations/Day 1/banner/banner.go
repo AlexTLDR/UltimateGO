@@ -44,13 +44,19 @@ func banner(text string, width int) {
 }
 
 func isPalindrome(s string) bool {
-	// if len(s) == 1 {
-	// 	return true
-	// }
+	/* My version
 	for i := 0; i < len(s); i++ {
 		if s[i] == s[len(s)-1-i] {
 			return true
 		}
 	}
 	return false
+	*/
+
+	for i := 0; i < len(s)/2; i++ {
+		if s[i] != s[len(s)-1-i] {
+			return false
+		}
+	}
+	return true
 }
