@@ -30,6 +30,8 @@ func sha1Sum(fileName string) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	defer r.Close()
+
 	//io.CopyN(os.Stdout, r, 100)
 	w := sha1.New()
 
