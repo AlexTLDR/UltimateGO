@@ -8,7 +8,7 @@ import (
 // UTF for copy paste -> ☺ <-
 
 func main() {
-	s := "G☺"
+	s := "G☺G"
 	banner(s, 6)
 	for i, v := range s {
 		fmt.Println(i, "=", v)
@@ -52,9 +52,16 @@ func isPalindrome(s string) bool {
 	}
 	return false
 	*/
-
+	/* Non unicode version
 	for i := 0; i < len(s)/2; i++ {
 		if s[i] != s[len(s)-1-i] {
+			return false
+		}
+	}
+	*/
+	rs := []rune(s)
+	for i := 0; i < len(rs)/2; i++ {
+		if rs[i] != rs[len(rs)-1-i] {
 			return false
 		}
 	}
