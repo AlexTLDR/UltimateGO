@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 )
 
 /* JSON <-> Go
@@ -21,11 +22,14 @@ Go -> io.Writer -> JSON: json.Encoder
 Go -> []byte -> JSON: json.Marshal
 */
 
+/* Moved this struct as an anonymous struct in the function
+
 type Reply struct {
 	Name string
 	//Public_Repos int
 	NumRepos int `json:"public_repos"`
 }
+*/
 
 func main() {
 	s := "AlexTLDR"
@@ -33,7 +37,7 @@ func main() {
 }
 
 func githubInfo(login string) (string, int, error) {
-	url := "https://api.github.com/users/" + login
+	url := "https://api.github.com/users/" + url.PathEscape(login)
 	resp, err := http.Get(url)
 	if err != nil {
 		//log.Fatalf("error: %s", err)
@@ -50,7 +54,11 @@ func githubInfo(login string) (string, int, error) {
 			log.Fatalf("error: can't copy - %s", err)
 		}
 	*/
-	var r Reply
+	var r struct { // Anonymous struct
+		Name string
+		//Public_Repos int
+		NumRepos int `json:"public_repos"`
+	}
 	dec := json.NewDecoder(resp.Body)
 	if err := dec.Decode(&r); err != nil {
 		//log.Fatalf("error: can't decode - %s", err)
