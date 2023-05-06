@@ -3,12 +3,18 @@ package main
 import (
 	"compress/gzip"
 	"crypto/sha1"
+	"fmt"
 	"io"
+	"log"
 	"os"
 )
 
 func main() {
-	sha1Sum("http.log.gz")
+	sig, err := sha1Sum("http.log.gz")
+	if err != nil {
+		log.Fatalf("error: %s", err)
+	}
+	fmt.Println(sig)
 }
 
 // $ cat http.log.gz| gunzip | sha1sum
@@ -31,5 +37,6 @@ func sha1Sum(fileName string) (string, error) {
 		return "", err
 	}
 
-	return "", nil
+	sig := w.Sum(nil)
+	return fmt.Sprintf("%x", sig), nil
 }
