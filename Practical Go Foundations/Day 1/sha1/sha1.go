@@ -9,7 +9,7 @@ func sha1Sum(fileName string) (string, error) {
 	if err != nil {
 		return "", nil
 	}
-	defer file.Close()
+	defer file.Close() //defered are called in LIFO order
 
 	return "", nil
 }
