@@ -15,6 +15,12 @@ null - nil
 number - float64(default number type), float32, int8, int16, int32, int64, int, uint8, ...
 array - []any (known before go 1.9 as the ([]interface{}))
 object - map[string]any, struct
+
+encoding/json API
+JSON -> io.Reader -> Go: json.Decoder
+JSON -> []byte -> Go: json.Unmarshal
+Go -> io.Writer -> JSON: json.Encoder
+Go -> []byte -> JSON: json.Marshal
 */
 
 func main() {
