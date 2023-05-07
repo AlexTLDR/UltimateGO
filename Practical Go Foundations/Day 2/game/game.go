@@ -12,6 +12,10 @@ const (
 	maxY = 600
 )
 
+type mover interface {
+	Move(x, y int)
+}
+
 func main() {
 	var i1 Item
 	fmt.Println(i1)
@@ -43,6 +47,26 @@ func main() {
 
 	fmt.Printf("p1: %#v\n", p1)
 	fmt.Printf("p1.X: %#v\n", p1.X)
+
+	p1.Move(400, 600)
+	fmt.Printf("p1 (move): %#v\n", p1)
+
+	ms := []mover{
+		&i1,
+		&p1,
+		&i2,
+	}
+
+	moveAll(ms, 0, 0)
+	for _, m := range ms {
+		fmt.Println(m)
+	}
+}
+
+func moveAll(ms []mover, x, y int) {
+	for _, m := range ms {
+		m.Move(x, y)
+	}
 }
 
 // i is called "the receiver"
