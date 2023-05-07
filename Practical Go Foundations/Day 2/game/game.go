@@ -30,6 +30,19 @@ func main() {
 
 	i3.Move(100, 200)
 	fmt.Printf("i3 (move): %#v\n", i3)
+
+	type Player struct {
+		Name string
+		Item
+	}
+
+	p1 := Player{
+		Name: "Alex",
+		Item: Item{500, 300},
+	}
+
+	fmt.Printf("p1: %#v\n", p1)
+	fmt.Printf("p1.X: %#v\n", p1.X)
 }
 
 // i is called "the receiver"
