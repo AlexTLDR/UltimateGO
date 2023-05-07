@@ -16,6 +16,32 @@ type mover interface {
 	Move(x, y int)
 }
 
+type Player struct {
+	Name string
+	Item
+	Keys []Key
+}
+
+func (p *Player) FoundKey(k Key) error {
+	if k < Jade || k >= invalidKey {
+		return fmt.Errorf("invalid key: %#v", k)
+	}
+
+	if !containsKey(p.Keys, k) {
+		p.Keys = append(p.Keys, k)
+	}
+	return nil
+}
+
+func containsKey(keys []Key, k Key) bool {
+	for _, k2 := range keys {
+		if k2 == k {
+			return true
+		}
+	}
+	return false
+}
+
 type Key byte
 
 // enum
@@ -23,6 +49,7 @@ const (
 	Jade Key = iota + 1
 	Copper
 	Crystal
+	invalidKey // internal (not exported)
 )
 
 func main() {
@@ -43,11 +70,6 @@ func main() {
 
 	i3.Move(100, 200)
 	fmt.Printf("i3 (move): %#v\n", i3)
-
-	type Player struct {
-		Name string
-		Item
-	}
 
 	p1 := Player{
 		Name: "Alex",
@@ -73,6 +95,11 @@ func main() {
 
 	k := Jade
 	fmt.Println("k:", k)
+
+	p1.FoundKey(Jade)
+	fmt.Println(p1.Keys)
+	p1.FoundKey(Jade)
+	fmt.Println(p1.Keys)
 }
 
 // Implement fmt.Stringer interface
