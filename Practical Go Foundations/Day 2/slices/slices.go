@@ -36,9 +36,24 @@ func main() {
 	fmt.Println(median(vs))
 	vs = []float64{2, 1, 4, 3}
 	fmt.Println(median(vs))
+	fmt.Println(vs) //vs is sorted because both copies belong to the same backing array
 }
 
 func median(values []float64) float64 {
+	/*
+		Copy in order not to change the values - creates another backing array
+		nums := make ([]float64, len(values))
+		copy(nums, values)
+		sort.Float64s(nums)
+		i := len(nums) / 2
+		fmt.Println("i is:", i)
+		if len(nums)%2 != 0 {
+			return nums[i]
+		}
+
+		v := (values[i-1] + values[i]) / 2
+		return v
+	*/
 	sort.Float64s(values)
 	i := len(values) / 2
 	fmt.Println("i is:", i)
