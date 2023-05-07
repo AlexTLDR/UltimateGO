@@ -16,6 +16,15 @@ type mover interface {
 	Move(x, y int)
 }
 
+type Key byte
+
+// enum
+const (
+	Jade Key = iota + 1
+	Copper
+	Crystal
+)
+
 func main() {
 	var i1 Item
 	fmt.Println(i1)
@@ -61,6 +70,23 @@ func main() {
 	for _, m := range ms {
 		fmt.Println(m)
 	}
+
+	k := Jade
+	fmt.Println("k:", k)
+}
+
+// Implement fmt.Stringer interface
+func (k Key) String() string {
+	switch k {
+	case Jade:
+		return "jade"
+	case Copper:
+		return "copper"
+	case Crystal:
+		return "crystal"
+	}
+
+	return fmt.Sprintf("<Key %d>", k)
 }
 
 func moveAll(ms []mover, x, y int) {
