@@ -18,4 +18,7 @@ func main() {
 
 	s3 = append(s3, 100)
 	fmt.Printf("s3 (append)= %#v\n", s3)
+	fmt.Printf("s2 (append)= %#v\n", s2) // s2 is changed as well!!
+	fmt.Printf("s2: len=%d, cap=%d\n", len(s2), cap(s2))
+	fmt.Printf("s3: len=%d, cap=%d\n", len(s3), cap(s3))
 }
