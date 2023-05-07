@@ -37,9 +37,14 @@ func main() {
 	vs = []float64{2, 1, 4, 3}
 	fmt.Println(median(vs))
 	fmt.Println(vs) //vs is sorted because both copies belong to the same backing array
+
+	fmt.Println(median(nil)) // the function needs to have an error value return
 }
 
-func median(values []float64) float64 {
+func median(values []float64) (float64, error) {
+	if len(values) == 0 {
+		return 0, fmt.Errorf("median of empty slice")
+	}
 	/*
 		Copy in order not to change the values - creates another backing array
 		nums := make ([]float64, len(values))
@@ -48,21 +53,21 @@ func median(values []float64) float64 {
 		i := len(nums) / 2
 		fmt.Println("i is:", i)
 		if len(nums)%2 != 0 {
-			return nums[i]
+			return nums[i], nil
 		}
 
 		v := (values[i-1] + values[i]) / 2
-		return v
+		return v, nil
 	*/
 	sort.Float64s(values)
 	i := len(values) / 2
 	fmt.Println("i is:", i)
 	if len(values)%2 != 0 {
-		return values[i]
+		return values[i], nil
 	}
 
 	v := (values[i-1] + values[i]) / 2
-	return v
+	return v, nil
 }
 
 func concat(s1, s2 []string) []string {
