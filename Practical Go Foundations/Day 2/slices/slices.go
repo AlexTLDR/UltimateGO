@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func main() {
 	var s []int
@@ -29,6 +32,22 @@ func main() {
 	fmt.Println("s4", len(s4), cap(s4))
 
 	fmt.Println(concat([]string{"A", "B"}, []string{"C", "D", "E"})) // [A B C D E]
+	vs := []float64{2, 1, 3}
+	fmt.Println(median(vs))
+	vs = []float64{2, 1, 4, 3}
+	fmt.Println(median(vs))
+}
+
+func median(values []float64) float64 {
+	sort.Float64s(values)
+	i := len(values) / 2
+	fmt.Println("i is:", i)
+	if len(values)%2 != 0 {
+		return values[i]
+	}
+
+	v := (values[i-1] + values[i]) / 2
+	return v
 }
 
 func concat(s1, s2 []string) []string {
