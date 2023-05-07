@@ -22,3 +22,14 @@ func main() {
 	fmt.Printf("s2: len=%d, cap=%d\n", len(s2), cap(s2))
 	fmt.Printf("s3: len=%d, cap=%d\n", len(s3), cap(s3))
 }
+
+func appendInt(s []int, v int) []int {
+	i := len(s)
+	if len(s) < cap(s) {
+		s = s[:len(s)+1]
+	} else {
+		s2 := make([]int, 2*len(s)+1)
+		copy(s2, s)
+		s = s2[:len(s)+1]
+	}
+}
