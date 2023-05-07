@@ -7,6 +7,11 @@ type Item struct {
 	Y int
 }
 
+const (
+	maxX = 1000
+	maxY = 600
+)
+
 func main() {
 	var i1 Item
 	fmt.Println(i1)
@@ -20,4 +25,27 @@ func main() {
 		//X:20,
 	}
 	fmt.Printf("i3: %#v\n", i3)
+	fmt.Println(NewItem(10, 20))
+	fmt.Println(NewItem(10, -20))
+
+	i3.Move(100, 200)
+	fmt.Printf("i3 (move): %#v\n", i3)
+}
+
+// i is called "the receiver"
+func (i *Item) Move(x, y int) {
+	i.X = x
+	i.Y = y
+}
+
+func NewItem(x, y int) (*Item, error) {
+	if x < 0 || x > maxX || y < 0 || y > maxY {
+		return nil, fmt.Errorf("%d/%d out of bounds %d/%d", x, y, maxX, maxY)
+	}
+
+	i := Item{
+		X: x,
+		Y: y,
+	}
+	return &i, nil
 }
