@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"regexp"
+	"strings"
 )
 
 // What is the most common word (ignoring case) in sherlock.txt ?
@@ -22,44 +23,61 @@ func main() {
 	defer file.Close()
 
 	wordFrequency(file)
-	mapDemo()
+	// mapDemo()
+}
+
+func maxWord(freqs map[string]int) (string, error) {
+	if len(freqs) == 0 {
+		return "", fmt.Errorf("empty map")
+	}
+
+	maxN, maxW := 0, ""
+
+	for word, count := range freqs {
+		if count > maxN {
+			maxN, maxW = count, word
+		}
+	}
+
+	return maxW, nil
 }
 
 func wordFrequency(r io.Reader) (map[string]int, error) {
 	s := bufio.NewScanner(r)
-	lnum := 0
+	freqs := make(map[string]int) // word count
+
 	for s.Scan() {
-		lnum++
 		words := wordRe.FindAllString(s.Text(), -1) // current line
-		if len(words) != 0 {
-			fmt.Println(words)
-			break
+		for _, w := range words {
+			freqs[strings.ToLower(w)]++
 		}
 	}
 
 	if err := s.Err(); err != nil {
 		return nil, err
 	}
-	fmt.Println("number of lines:", lnum)
-	return nil, nil
+
+	return freqs, nil
 }
 
-func mapDemo() {
-	var stocks map[string]float64 // word -> count
-	sym := "TTWO"
-	price := stocks[sym]
-	fmt.Printf("%s -> $%.2f\n", sym, price)
+// func mapDemo() {
+// 	var stocks map[string]float64
+// 	sym := "TTWO"
+// 	price := stocks[sym]
+// 	fmt.Printf("%s -> $%.2f\n", sym, price)
 
-	if price, ok := stocks[sym]; ok {
-		fmt.Printf("%s -> $%.2f\n", sym, price)
-	} else {
-		fmt.Printf("%s not found\n", sym)
-	}
-	stocks = make(map[string]float64)
-	stocks[sym] = 136.73
-	if price, ok := stocks[sym]; ok {
-		fmt.Printf("%s -> $%.2f\n", sym, price)
-	} else {
-		fmt.Printf("%s not found\n", sym)
-	}
-}
+// 	if price, ok := stocks[sym]; ok {
+// 		fmt.Printf("%s -> $%.2f\n", sym, price)
+// 	} else {
+// 		fmt.Printf("%s not found\n", sym)
+// 	}
+// 	stocks = make(map[string]float64)
+// 	stocks[sym] = 136.73
+// 	if price, ok := stocks[sym]; ok {
+// 		fmt.Printf("%s -> $%.2f\n", sym, price)
+// 	} else {
+// 		fmt.Printf("%s not found\n", sym)
+// 	}
+
+// 	delete(stocks, "AAPL")
+// }
