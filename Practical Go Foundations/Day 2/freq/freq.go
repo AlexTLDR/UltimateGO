@@ -45,5 +45,14 @@ func wordFrequency(r io.Reader) (map[string]int, error) {
 }
 
 func mapDemo() {
-	var stocks map[string]int
+	var stocks map[string]float64 // word -> count
+	sym := "TTWO"
+	price := stocks[sym]
+	fmt.Printf("%s -> $%.2f\n", sym, price)
+
+	if price, ok := stocks[sym]; ok {
+		fmt.Printf("%s -> $%.2f\n", sym, price)
+	} else {
+		fmt.Printf("%s not found\n", sym)
+	}
 }
