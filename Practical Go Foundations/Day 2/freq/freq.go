@@ -6,9 +6,12 @@ import (
 	"io"
 	"log"
 	"os"
+	"regexp"
 )
 
-// What is the most common word in sherlock.txt ?
+// What is the most common word (ignoring case) in sherlock.txt ?
+
+var wordRe = regexp.MustCompile(`[a-zA-Z]+`)
 
 func main() {
 	file, err := os.Open("sherlock.txt")
@@ -19,6 +22,7 @@ func main() {
 	defer file.Close()
 
 	wordFrequency(file)
+	mapDemo()
 }
 
 func wordFrequency(r io.Reader) (map[string]int, error) {
@@ -26,8 +30,11 @@ func wordFrequency(r io.Reader) (map[string]int, error) {
 	lnum := 0
 	for s.Scan() {
 		lnum++
-		s.Text() // current line
-
+		words := wordRe.FindAllString(s.Text(), -1) // current line
+		if len(words) != 0 {
+			fmt.Println(words)
+			break
+		}
 	}
 
 	if err := s.Err(); err != nil {
@@ -35,4 +42,8 @@ func wordFrequency(r io.Reader) (map[string]int, error) {
 	}
 	fmt.Println("number of lines:", lnum)
 	return nil, nil
+}
+
+func mapDemo() {
+	var stocks map[string]int
 }
