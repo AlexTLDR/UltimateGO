@@ -55,4 +55,11 @@ func mapDemo() {
 	} else {
 		fmt.Printf("%s not found\n", sym)
 	}
+	stocks = make(map[string]float64)
+	stocks[sym] = 136.73
+	if price, ok := stocks[sym]; ok {
+		fmt.Printf("%s -> $%.2f\n", sym, price)
+	} else {
+		fmt.Printf("%s not found\n", sym)
+	}
 }
