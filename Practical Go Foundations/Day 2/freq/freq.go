@@ -22,8 +22,23 @@ func main() {
 
 	defer file.Close()
 
-	wordFrequency(file)
+	//wordFrequency(file)
 	// mapDemo()
+
+	w, err := mostCommon(file)
+	if err != nil {
+		log.Fatal("error: %s", err)
+	}
+
+	fmt.Println(w)
+}
+
+func mostCommon(r io.Reader) (string, error) {
+	freqs, err := wordFrequency(r)
+	if err != nil {
+		return "", err
+	}
+	return maxWord(freqs)
 }
 
 func maxWord(freqs map[string]int) (string, error) {
