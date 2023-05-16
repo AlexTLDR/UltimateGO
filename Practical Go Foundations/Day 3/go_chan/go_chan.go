@@ -35,7 +35,10 @@ func main() {
 	  - send & receive will block until opposite operation(*)
 	*/
 	ch := make(chan string)
-	ch <- "hi"  // send
+	go func() {
+		ch <- "hi" // send
+	}()
+
 	msg := <-ch // receive
 	fmt.Println(msg)
 }
