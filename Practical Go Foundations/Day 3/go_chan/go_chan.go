@@ -33,6 +33,7 @@ func main() {
 	time.Sleep(10 * time.Millisecond)
 	/*Channel semantics
 	  - send & receive will block until opposite operation(*)
+	  - receive from a closed channel will return zero value without blocking
 	*/
 	ch := make(chan string)
 	go func() {
@@ -41,4 +42,19 @@ func main() {
 
 	msg := <-ch // receive
 	fmt.Println(msg)
+
+	go func() {
+		for i := 0; i < 3; i++ {
+			msg := fmt.Sprintf("message #%d", i+1)
+			ch <- msg
+		}
+		close(ch)
+	}()
+
+	for msg := range ch {
+		fmt.Println("got:", msg)
+	}
+
+	msg = <-ch // ch is closed
+	fmt.Printf("closed: %#v\n", msg)
 }
