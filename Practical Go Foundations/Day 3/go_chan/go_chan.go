@@ -34,6 +34,7 @@ func main() {
 	/*Channel semantics
 	  - send & receive will block until opposite operation(*)
 	  - receive from a closed channel will return zero value without blocking
+	  - send to a closed channel will panic
 	*/
 	ch := make(chan string)
 	go func() {
@@ -55,9 +56,21 @@ func main() {
 		fmt.Println("got:", msg)
 	}
 
+	/* for/range does this
+	for {
+		msg, ok := <-ch
+		if !ok {
+			break
+		}
+		fmt.Println("got:", msg)
+	}
+	*/
+
 	msg = <-ch // ch is closed
 	fmt.Printf("closed: %#v\n", msg)
 
 	msg, ok := <-ch // ch is closed
 	fmt.Printf("closed: %#v (ok=%v)\n", msg, ok)
+
+	// ch <- "hi" // ch is closed => panic
 }
