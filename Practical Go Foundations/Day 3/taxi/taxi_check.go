@@ -69,7 +69,7 @@ func parseSigFile(r io.Reader) (map[string]string, error) {
 }
 
 func main() {
-	rootDir := "/tmp/taxi" // Change to where to unzipped taxi-sha256.zip
+	rootDir := "/home/alex/git/UltimateGO/Practical Go Foundations/Day 3/taxi/zip" // Change to where to unzipped taxi-sha256.zip
 	file, err := os.Open(path.Join(rootDir, "sha256sum.txt"))
 	if err != nil {
 		log.Fatalf("error: %s", err)
