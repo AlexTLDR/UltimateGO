@@ -31,4 +31,11 @@ func main() {
 	}
 
 	time.Sleep(10 * time.Millisecond)
+	/*Channel semantics
+	  - send & receive will block until opposite operation(*)
+	*/
+	ch := make(chan string)
+	ch <- "hi"  // send
+	msg := <-ch // receive
+	fmt.Println(msg)
 }
