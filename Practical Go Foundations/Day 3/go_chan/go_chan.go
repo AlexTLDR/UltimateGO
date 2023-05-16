@@ -57,4 +57,7 @@ func main() {
 
 	msg = <-ch // ch is closed
 	fmt.Printf("closed: %#v\n", msg)
+
+	msg, ok := <-ch // ch is closed
+	fmt.Printf("closed: %#v (ok=%v)\n", msg, ok)
 }
