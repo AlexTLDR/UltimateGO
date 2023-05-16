@@ -37,6 +37,8 @@ func main() {
 	  - send to a closed channel will panic
 	  - closing a closed channel will panic
 	  - send/receive to a nil channel will block forever
+
+	  https://www.353solutions.com/channel-semantics
 	*/
 	ch := make(chan string)
 	go func() {
