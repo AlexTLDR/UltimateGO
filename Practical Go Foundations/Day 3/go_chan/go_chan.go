@@ -35,6 +35,8 @@ func main() {
 	  - send & receive will block until opposite operation(*)
 	  - receive from a closed channel will return zero value without blocking
 	  - send to a closed channel will panic
+	  - closing a closed channel will panic
+	  - send/receive to a nil channel will block forever
 	*/
 	ch := make(chan string)
 	go func() {
