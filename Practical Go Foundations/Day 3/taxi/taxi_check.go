@@ -83,18 +83,24 @@ func main() {
 
 	start := time.Now()
 	ok := true
+	ch := make(chan result)
 	for name, signature := range sigs {
 		fileName := path.Join(rootDir, name) + ".bz2"
-		sig, err := fileSig(fileName)
-		if err != nil {
-			fmt.Fprintf(os.Stderr, "error: %s - %s\n", fileName, err)
+		// sig, err := fileSig(fileName)
+		go sigWorker(fileName, signature, ch)
+	}
+
+	for range sigs {
+		r := <-ch
+		if r.err != nil {
+			fmt.Fprintf(os.Stderr, "error: %s - %s\n", r.fileName, err)
 			ok = false
 			continue
 		}
 
-		if sig != signature {
+		if !r.match {
 			ok = false
-			fmt.Printf("error: %s mismatch\n", fileName)
+			fmt.Printf("error: %s mismatch\n", r.fileName)
 		}
 	}
 
@@ -103,4 +109,21 @@ func main() {
 	if !ok {
 		os.Exit(1)
 	}
+}
+
+func sigWorker(fileName, signature string, ch chan result) {
+	r := result{fileName: fileName}
+	sig, err := fileSig(fileName)
+	if err != nil {
+		r.err = err
+	} else {
+		r.match = sig == signature
+	}
+	ch <- r
+}
+
+type result struct {
+	fileName string
+	err      error
+	match    bool
 }
