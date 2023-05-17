@@ -1,14 +1,22 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sync"
+)
 
 type Payment struct {
 	From   string
 	To     string
 	Amount float64 // Dollar
+
+	once sync.Once
 }
 
 func (p *Payment) Process() {
+	p.once.Do(p.process)
+}
+func (p *Payment) process() {
 	fmt.Printf("%s -> $%.2f -> %s\n", p.From, p.Amount, p.To)
 }
 
