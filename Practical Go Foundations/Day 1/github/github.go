@@ -1,10 +1,12 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 /* JSON <-> Go
@@ -32,17 +34,22 @@ type Reply struct {
 */
 
 func main() {
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
 	s := "AlexTLDR"
-	fmt.Println(githubInfo(s))
+	fmt.Println(githubInfo(ctx, s))
 }
 
-func githubInfo(login string) (string, int, error) {
+func githubInfo(ctx context.Context, login string) (string, int, error) {
 	url := "https://api.github.com/users/" + url.PathEscape(login)
-	resp, err := http.Get(url)
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+	//resp, err := http.Get(url)
 	if err != nil {
 		//log.Fatalf("error: %s", err)
 		return "", 0, err
 	}
+
+	resp, err := http.DefaultClient.Do(req)
 
 	if resp.StatusCode != http.StatusOK {
 		return "", 0, fmt.Errorf("%#v - %s", url, resp.Status)
