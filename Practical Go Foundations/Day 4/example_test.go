@@ -6,6 +6,13 @@ import (
 	"github.com/AlexTLDR/UltimateGO"
 )
 
+/*
+   Test discovery:
+   For every file ending with _test.go, run every function that matches either:
+   - Example[A-Z_].* , body must include // Output: comment
+   - Test[A-Z_].*
+*/
+
 func ExampleTokenize() {
 	text := "Who's on first"
 	tokens := nlp.Tokenize(text)
@@ -13,4 +20,5 @@ func ExampleTokenize() {
 
 	//Output:
 	// [who s on first]
+
 }
