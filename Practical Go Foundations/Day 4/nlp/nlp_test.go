@@ -28,6 +28,7 @@ func loadTokenizeCases(t *testing.T) []loadTokenizeCases {
 	var testCase struct {
 		Cases []tokenizeCase
 	}
+	return testCases.Cases
 }
 func TestTokenizeTable(t *testing.T) {
 	for _, tc := range loadTokenizeCases(t) {
