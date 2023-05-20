@@ -33,6 +33,7 @@ func main() {
 	time.Sleep(10 * time.Millisecond)
 	/*Channel semantics
 	  - send & receive will block until opposite operation(*)
+	  	- Buffered channel has cap(ch) non-blocking send operations
 	  - receive from a closed channel will return zero value without blocking
 	  - send to a closed channel will panic
 	  - closing a closed channel will panic
