@@ -27,7 +27,7 @@ func main() {
 	}()
 
 	go func() {
-		time.Sleep(2 * time.Millisecond)
+		time.Sleep(20 * time.Millisecond)
 		ch2 <- 2
 	}()
 
@@ -37,6 +37,8 @@ func main() {
 
 	case val := <-ch2:
 		fmt.Println("ch2", val)
+	case <-time.After(5 * time.Millisecond):
+		fmt.Println("timeout")
 	}
 
 }
